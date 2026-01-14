@@ -74,9 +74,9 @@ jobs:
         run: |
           set -euo pipefail
 
-          LOG="run/logs/latest.log"
+          LOG="run/logs/groovy.log"
 
-          PATTERN='ERROR] [groovyscript]'
+          PATTERN='/ERROR]'
           if grep -Fq "$PATTERN" "$LOG"; then
             echo "ERROR: Found groovyscript error in log!"
             echo "---- matching lines ----"
@@ -85,3 +85,11 @@ jobs:
           else
             echo "OK: Pattern not found"
           fi
+        
+      - name: Upload Groovy logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: groovy-log
+          path: |
+            run/logs/groovy.log
