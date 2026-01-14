@@ -13,6 +13,11 @@
         24,
         25
     ],
+    "compatibleJavaName": "java-runtime-epsilon",
+    "javaVersion": {
+        "component": "java-runtime-epsilon",
+        "majorVersion": 25
+    },
     "formatVersion": 1,
     "libraries": [
         {

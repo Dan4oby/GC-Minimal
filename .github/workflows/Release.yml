@@ -18,7 +18,28 @@ jobs:
           distribution: temurin
           java-version: "21"
 
-      - name: Download Pakku (pinned version)
+      - name: Ensure jq exists
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
+          fi
+
+      - name: Read pack name and version from pakku.json
+        id: packmeta
+        run: |
+          PACK_NAME=$(jq -r '.name' pakku.json)
+          PACK_VERSION=$(jq -r '.version' pakku.json)
+
+          echo "PACK_NAME=$PACK_NAME" >> $GITHUB_ENV
+          echo "PACK_VERSION=$PACK_VERSION" >> $GITHUB_ENV
+
+          echo "name=$PACK_NAME" >> $GITHUB_OUTPUT
+          echo "version=$PACK_VERSION" >> $GITHUB_OUTPUT
+
+          echo "Pack: $PACK_NAME $PACK_VERSION"
+      
+      - name: Download Pakku
         run: |
           PAKKU_VERSION="1.3.3"
           curl -L -o pakku.jar "https://github.com/juraj-hrivnak/Pakku/releases/download/v${PAKKU_VERSION}/pakku.jar"
@@ -32,21 +53,9 @@ jobs:
         run: |
           java -jar pakku.jar fetch
 
-      - name: Export multiplatform zip
+      - name: Export multiplatform
         run: |
           java -jar pakku.jar export
-
-      - name: Read pack name and version from pakku.json
-        id: packver
-        run: |
-          PACK_NAME=$(jq -r '.name' pakku.json)
-          echo "PACK_NAME=$PACK_NAME" >> $GITHUB_ENV
-          echo "name=$PACK_NAME" >> $GITHUB_OUTPUT
-          echo "Pack name: $PACK_NAME"
-          PACK_VERSION=$(jq -r '.version' pakku.json)
-          echo "PACK_VERSION=$PACK_VERSION" >> $GITHUB_ENV
-          echo "version=$PACK_VERSION" >> $GITHUB_OUTPUT
-          echo "Pack version: $PACK_VERSION"
           
       - name: Upload CurseForge build artifact
         uses: actions/upload-artifact@v4

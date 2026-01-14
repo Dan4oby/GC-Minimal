@@ -1,0 +1,70 @@
+name: Build modpack and test
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Ensure jq exists
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
+          fi
+
+      - name: Read pack name and version from pakku.json
+        id: packmeta
+        run: |
+          PACK_NAME=$(jq -r '.name' pakku.json)
+          PACK_VERSION=$(jq -r '.version' pakku.json)
+
+          echo "PACK_NAME=$PACK_NAME" >> $GITHUB_ENV
+          echo "PACK_VERSION=$PACK_VERSION" >> $GITHUB_ENV
+
+          echo "name=$PACK_NAME" >> $GITHUB_OUTPUT
+          echo "version=$PACK_VERSION" >> $GITHUB_OUTPUT
+
+          echo "Pack: $PACK_NAME $PACK_VERSION"
+      
+      - name: Download Pakku
+        run: |
+          PAKKU_VERSION="1.3.3"
+          curl -L -o pakku.jar "https://github.com/juraj-hrivnak/Pakku/releases/download/v${PAKKU_VERSION}/pakku.jar"
+          java -jar pakku.jar --version
+
+      - name: Configure CurseForge credentials
+        run: |
+          java -jar pakku.jar credentials set --cf-api-key '${{ secrets.CF_API_KEY }}'
+
+      - name: Fetch mods
+        run: |
+          java -jar pakku.jar fetch
+          
+      - name: Get ready client for mc headless
+        run: |
+          mkdir -p run/mods
+          cp -a mods/. run/mods/
+          cp -a config/. run/config/
+          cp -a local/. run/local/
+          cp -a groovy/. run/groovy/
+
+      - name: Run MC test client
+        uses: headlesshq/mc-runtime-test@4.1.0 
+        with:
+          mc: 1.12.2
+          modloader: forge
+          regex: .*forge.*
+          mc-runtime-test: forge
+          java: 8
