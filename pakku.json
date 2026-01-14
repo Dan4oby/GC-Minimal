@@ -1,0 +1,61 @@
+{
+    "name": "GC Minimal",
+    "version": "0.1",
+    "author": "Danhoby",
+    "overrides": [
+        "config",
+        "groovy",
+        "README.md",
+        "LICENSE"
+    ],
+    "client_overrides": [
+        "local",
+        "options.txt"
+    ],
+    "projects": {
+        "nothirium": {
+            "side": "CLIENT",
+            "update_strategy": "NONE"
+        },
+        "better-quest-pop-up": {
+            "side": "CLIENT"
+        },
+        "e4mc-retro": {
+            "side": "CLIENT"
+        },
+        "renderlib": {
+            "side": "CLIENT"
+        },
+        "smooth-font": {
+            "side": "CLIENT"
+        },
+        "mouse-tweaks-unofficial": {
+            "side": "CLIENT"
+        },
+        "just-enough-resources-jer": {
+            "side": "CLIENT",
+            "update_strategy": "NONE"
+        },
+        "jei-hider": {
+            "side": "CLIENT"
+        },
+        "had-enough-items": {
+            "side": "CLIENT"
+        },
+        "just-enough-effects": {
+            "side": "CLIENT"
+        },
+        "caliper": {
+            "side": "CLIENT"
+        },
+        "extraquests": {
+            "update_strategy": "NONE"
+        },
+        "extralib": {
+            "update_strategy": "NONE"
+        },
+        "noisethreader": {
+            "update_strategy": "NONE"
+        }
+    }
+}
