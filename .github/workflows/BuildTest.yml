@@ -76,7 +76,7 @@ jobs:
 
           LOG="run/logs/latest.log"
 
-          PATTERN='[Server thread/ERROR] [groovyscript]:'
+          PATTERN='ERROR] [groovyscript]'
           if grep -Fq "$PATTERN" "$LOG"; then
             echo "ERROR: Found groovyscript error in log!"
             echo "---- matching lines ----"
