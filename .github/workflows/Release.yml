@@ -1,8 +1,6 @@
-name: Build pack
+name: Release modpack
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:

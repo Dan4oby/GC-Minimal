@@ -66,5 +66,5 @@ jobs:
           mc: 1.12.2
           modloader: forge
           regex: .*forge.*
-          mc-runtime-test: forge
+          mc-runtime-test: lexforge
           java: 8
