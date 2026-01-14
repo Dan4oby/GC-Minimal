@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 
 long lastClientPrint = 0L
 long lastServerPrint = 0L
-
+fewfwe
 event_manager.listen { Event event ->
 
     // ===== КЛИЕНТ =====

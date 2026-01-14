@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import utils.CommonUtils
-
+fwefew
 @Field static String modpackName = "GC Minimal " + getPackVersion() + " on Minecraft 1.12.2"
 
 event_manager.listen(EventPriority.LOWEST) { RenderGameOverlayEvent.Text event ->

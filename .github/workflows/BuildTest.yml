@@ -68,3 +68,20 @@ jobs:
           regex: .*forge.*
           mc-runtime-test: lexforge
           java: 8
+
+      - name: Fail on groovyscript error
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          LOG="run/logs/latest.log"
+
+          PATTERN='[Server thread/ERROR] [groovyscript]:'
+          if grep -Fq "$PATTERN" "$LOG"; then
+            echo "ERROR: Found groovyscript error in log!"
+            echo "---- matching lines ----"
+            grep -Fn "$PATTERN" "$LOG" | head -n 50
+            exit 1
+          else
+            echo "OK: Pattern not found"
+          fi
