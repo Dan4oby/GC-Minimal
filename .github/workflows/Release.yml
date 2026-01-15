@@ -63,10 +63,16 @@ jobs:
           cd build/prism/mmc-pack
           zip -r "../${PACK_FILENAME}-Prism.zip" .
 
+      - name: Generate release notes
+        run: |
+          echo "## Changes" > release.md
+          git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)..HEAD >> release.md
+
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1.20.0
         with:
           tag: ${{ env.PACK_VERSION }}
           name: ${{ env.PACK_VERSION }}
+          bodyFile: release.md
           artifacts: "build/curseforge/*.zip,build/modrinth/*.mrpack,build/prism/*.zip"
           allowUpdates: true
