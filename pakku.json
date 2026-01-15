@@ -1,17 +1,20 @@
 {
     "name": "GC-Minimal",
-    "version": "0.1",
+    "version": "0.1.0",
     "author": "Danhoby",
+
     "overrides": [
         "config",
         "groovy",
         "README.md",
         "LICENSE"
     ],
+
     "client_overrides": [
         "local",
         "options.txt"
     ],
+
     "projects": {
         "nothirium": {
             "side": "CLIENT",
@@ -42,19 +45,10 @@
         "had-enough-items": {
             "side": "CLIENT"
         },
-        "just-enough-effects": {
-            "side": "CLIENT"
-        },
-        "caliper": {
-            "side": "CLIENT"
-        },
         "extraquests": {
             "update_strategy": "NONE"
         },
         "extralib": {
-            "update_strategy": "NONE"
-        },
-        "noisethreader": {
             "update_strategy": "NONE"
         }
     }
