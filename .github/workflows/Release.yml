@@ -59,8 +59,8 @@ jobs:
           java -jar pakku.jar export
           mv build/curseforge/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}.zip \
             build/curseforge/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}-CURSEFORGE.zip
-          mv build/curseforge/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}.mrpack \
-            build/curseforge/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}-MODRINTH.mrpack
+          mv build/modrinth/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}.mrpack \
+            build/modrinth/${{ steps.packmeta.outputs.name }}-${{ steps.packmeta.outputs.version }}-MODRINTH.mrpack
       
       - uses: ncipollo/release-action@v1.20.0
         with:

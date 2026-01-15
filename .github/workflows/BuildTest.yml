@@ -3,6 +3,8 @@ name: Build modpack and test
 on:
   push:
     branches: [ "main" ]
+      paths:
+      - "groovy/**"
 
 jobs:
   build:
