@@ -7,6 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write 
+
     steps:
       - uses: actions/checkout@v4
 
@@ -54,15 +57,11 @@ jobs:
       - name: Export multiplatform
         run: |
           java -jar pakku.jar export
-          
-      - name: Upload CurseForge build artifact
-        uses: actions/upload-artifact@v4
+          mv build/curseforge/${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}.zip \
+            build/curseforge/${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}-CURSEFORGE.zip
+          mv build/curseforge/${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}.mrpack \
+            build/curseforge/${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}-MODRINTH.mrpack
+      
+      - uses: ncipollo/release-action@v1.20.0
         with:
-          name: ${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}-CURSEFORGE
-          path: build/curseforge/*.zip
-
-      - name: Upload Modrinth build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.packver.outputs.name }}-${{ steps.packver.outputs.version }}-MODRINTH
-          path: build/modrinth/*.mrpack
+          artifacts: "build/curseforge/*,build/modrinth/*"
